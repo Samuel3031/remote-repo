@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.demo.repository.UserMapper">
+
+	<resultMap id="userResultMap"
+		type="com.example.demo.pojo.User">
+		<id property="userId" column="user_id" />
+		<result property="userName" column="user_name" />
+		<result property="password" column="password" />
+		<result property="email" column="email" />
+	</resultMap>
+	<!-- 登入 -->
+	<select id="userLogin" resultMap="userResultMap">
+		SELECT
+		user_id,user_name,password,email FROM USERTABLE WHERE
+		user_id =
+		#{userId} AND password = #{password}
+	</select>
+
+	<!-- 查询用户 -->
+	<select id="findUsersByUserId" resultMap="userResultMap">
+		SELECT user_id,
+		user_name, password, email FROM USERTABLE WHERE user_id =
+		#{userId}
+	</select>
+
+	<!-- 查询所有用户 -->
+	<select id="findAllUsers" resultMap="userResultMap">
+		SELECT
+		user_id,user_name,password,emailFROM USERTABLE
+	</select>
+
+	<!-- 插入用户 -->
+	<insert id="insertUser"
+		parameterType="com.example.demo.pojo.User" useGeneratedKeys = "true" keyProperty = "userId">
+		INSERT INTO USERTABLE (user_name, password, email)
+		VALUES (#{userName}, #{password}, #{email})
+	</insert>
+
+	<!-- 更新用户 -->
+	<update id="updateUser"
+		parameterType="com.example.demo.pojo.User">
+		UPDATE USERTABLE
+		SET user_name = #{userName}, password =
+		#{password}, email = #{email}
+		WHERE user_id = #{userId}
+	</update>
+
+	<!-- 删除用户 -->
+	<delete id="deleteUser" parameterType="Integer">
+		DELETE FROM USERTABLE
+		WHERE user_id = #{userId}
+	</delete>
+
+</mapper>

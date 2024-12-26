@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>更新用戶資料</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .update-container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+        }
+        .update-container h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .update-container label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+        .update-container input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .update-container input[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        .update-container input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+        .message {
+            color: red;
+            font-size: 14px;
+            text-align: center;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="update-container">
+    <h2>更新用戶資料</h2>
+    <form action="/user/update" method="POST">
+
+        <label for="userName">姓名</label>
+        <input style="width: 90%;" type="text" id="userName" name="userName" required>
+
+        <label for="email">電子郵件</label>
+        <input style="width: 90%;" type="email" id="email" name="email" required>
+
+        <input type="submit" value="更新">
+
+        <div class="message">
+            <!-- 顯示錯誤或成功訊息 -->
+            <span th:if="${error}" th:text="${error}"></span>
+            <span th:if="${message}" th:text="${message}"></span>
+        </div>
+    </form>
+</div>
+
+</body>
+</html>

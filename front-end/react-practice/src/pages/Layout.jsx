@@ -1,27 +1,47 @@
-import { Link, Outlet } from "react-router-dom"
-
+import { Link, Outlet } from "react-router-dom";
+import { createBrowserRouter,createHashRouter, useSearchParams } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { deleteuser } from "../api/userService";
+import Logout from "../component/Logout";
 
-async function getlist(){
+const Layout = () => {
+  const navigate = useNavigate();
+  const userinfo = localStorage.getItem("userinfo");
+  const user = userinfo ? JSON.parse(userinfo) : null;
+    //登出
 
-  const res = await axios.get(`http://localhost:8088/user/1`)
-  console.log(res) 
-}
-axios.get(`http://localhost:8088/user/1`)
-const Layout=()=>{
-    getlist()
-    return <div>當前是一級路由
-        <div>
-            <p>
-                <Link to="/">看板</Link>
-                <Link to="/article">文章</Link>
-            </p>
-        </div>
-        <div>
-            二級路由
-            <Outlet/>
-        </div>
+  
+//刪除帳戶
+  const handleDeleteUser = async () => {
+    
+  try{
+    const response=await deleteuser(user.userId);
+    alert(response.message);
+    navigate("/login");
+  } catch{alert("刪除時出錯"+user.userId);
+    console.error("刪除時出錯:", error);
+  }}
+
+  return (
+    <div className="wrapper">
+      登入成功
+      <div>
+        <p>
+        <button onClick={() => navigate('/info',{ state: null })} className="submit-btn">
+        使用者資訊
+    </button>
+    <button onClick={handleDeleteUser} className="submit-btn">
+      刪除帳戶
+    </button>
+    <Logout/>
+        </p>
+      </div>
+      <div>
+        
+      </div>
     </div>
-}
+  );
+};
 
-export default Layout
+export default Layout;
